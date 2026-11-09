@@ -2,1049 +2,856 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>CURLOFT — Your Fitness. Your Progress.</title>
-
-  <meta name="description" content="Meet CURLOFT, your personal workout companion. Track workouts, plan your training, monitor progress and build consistency.">
-  <meta name="keywords" content="CURLOFT, CURLOFT fitness, workout tracker, fitness app, gym tracker, Android workout app">
-  <meta name="author" content="CURLOFT">
-  <meta name="theme-color" content="#0B0E14">
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="CURLOFT — Your Fitness. Your Progress.">
-  <meta property="og:description" content="Train with purpose. Track your progress. Build consistency.">
-  <meta property="og:url" content="https://dstrn54.github.io/Curloft/">
-  <meta property="og:image" content="https://dstrn54.github.io/Curloft/curloft-wordmark.png">
-
-  <link rel="icon" href="favicon.ico">
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="curloft-symbol.png">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg: #0B0E14;
-      --surface: #111620;
-      --surface-2: #171E29;
-      --lime: #00FF66;
-      --text: #F4F7F5;
-      --muted: #929BA7;
-      --border: rgba(255,255,255,.09);
-      --radius: 20px;
-      --max: 1160px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 100px;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    button {
-      font: inherit;
-    }
-
-    .container {
-      width: min(var(--max), calc(100% - 44px));
-      margin: auto;
-    }
-
-    .lime {
-      color: var(--lime);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      color: var(--lime);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 19px;
-      height: 1px;
-      background: var(--lime);
-    }
-
-    /* NAVIGATION */
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(11,14,20,.82);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav {
-      height: 78px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-    }
-
-    .brand img {
-      width: 142px;
-      height: auto;
-      object-fit: contain;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .nav-links a {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-      transition: .25s;
-    }
-
-    .nav-links a:hover {
-      color: var(--lime);
-    }
-
-    .nav-cta {
-      padding: 11px 19px;
-      border: 1px solid var(--lime);
-      border-radius: 8px;
-      color: var(--lime) !important;
-    }
-
-    .nav-cta:hover {
-      background: var(--lime);
-      color: #07120B !important;
-    }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: 0;
-      color: white;
-      font-size: 27px;
-      cursor: pointer;
-    }
-
-    /* HERO */
-
-    .hero {
-      min-height: 690px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      padding: 110px 0 100px;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 650px;
-      height: 650px;
-      right: -150px;
-      top: -110px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,255,102,.105), transparent 68%);
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-      background-size: 55px 55px;
-      mask-image: linear-gradient(to right, transparent, black, transparent);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 760px;
-    }
-
-    .hero h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(52px, 8vw, 94px);
-      line-height: .99;
-      letter-spacing: -5px;
-      font-weight: 700;
-      margin: 28px 0;
-    }
-
-    .hero h1 span {
-      color: var(--lime);
-    }
-
-    .hero-description {
-      max-width: 550px;
-      color: var(--muted);
-      font-size: 17px;
-      line-height: 1.9;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-top: 38px;
-    }
-
-    .btn {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 11px;
-      padding: 15px 24px;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: 800;
-      transition: .25s;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--lime);
-      color: #07120B;
-      box-shadow: 0 0 35px rgba(0,255,102,.13);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 40px rgba(0,255,102,.3);
-    }
-
-    .btn-secondary {
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.035);
-      color: var(--text);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--lime);
-      color: var(--lime);
-    }
-
-    .hero-note {
-      margin-top: 22px;
-      color: #727D89;
-      font-size: 11px;
-      letter-spacing: .4px;
-    }
-
-    .hero-note span {
-      color: var(--lime);
-    }
-
-    /* SECTION COMMON */
-
-    section {
-      padding: 105px 0;
-    }
-
-    .section-heading {
-      max-width: 650px;
-      margin-bottom: 48px;
-    }
-
-    .section-heading h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(34px, 5vw, 55px);
-      letter-spacing: -2px;
-      line-height: 1.12;
-      margin: 17px 0;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.9;
-    }
-
-    /* PHILOSOPHY */
-
-    .philosophy {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: #0E121A;
-    }
-
-    .philosophy-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 90px;
-      align-items: center;
-    }
-
-    .philosophy h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(36px, 5vw, 58px);
-      line-height: 1.12;
-      letter-spacing: -2px;
-      margin-top: 22px;
-    }
-
-    .philosophy-copy {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 2;
-    }
-
-    .philosophy-copy p + p {
-      margin-top: 17px;
-    }
-
-    /* FEATURES */
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 17px;
-    }
-
-    .feature-card {
-      padding: 30px;
-      min-height: 235px;
-      background: linear-gradient(145deg, #151C27, #10151D);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: .3s;
-    }
-
-    .feature-card:hover {
-      border-color: rgba(0,255,102,.4);
-      transform: translateY(-5px);
-    }
-
-    .feature-number {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 12px;
-      color: var(--lime);
-      letter-spacing: 2px;
-    }
-
-    .feature-icon {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      margin: 24px 0 17px;
-      border: 1px solid rgba(0,255,102,.25);
-      border-radius: 12px;
-      color: var(--lime);
-      font-size: 20px;
-    }
-
-    .feature-card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 20px;
-      margin-bottom: 9px;
-    }
-
-    .feature-card p {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    /* EXPERIENCE */
-
-    .experience {
-      background: #0E121A;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .experience-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-    }
-
-    .experience-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 23px 17px;
-      text-align: center;
-      transition: .25s;
-    }
-
-    .experience-card:hover {
-      border-color: var(--lime);
-      transform: translateY(-4px);
-    }
-
-    .experience-card .symbol {
-      font-size: 25px;
-      color: var(--lime);
-      margin-bottom: 15px;
-    }
-
-    .experience-card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
-
-    .experience-card p {
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.7;
-    }
-
-    /* CTA */
-
-    .download-section {
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .download-section::before {
-      content: "";
-      position: absolute;
-      width: 600px;
-      height: 400px;
-      left: 50%;
-      top: 20px;
-      transform: translateX(-50%);
-      background: radial-gradient(ellipse, rgba(0,255,102,.09), transparent 70%);
-      pointer-events: none;
-    }
-
-    .download-inner {
-      position: relative;
-      max-width: 730px;
-      margin: auto;
-    }
-
-    .download-logo {
-      width: 75px;
-      height: 75px;
-      object-fit: contain;
-      margin-bottom: 25px;
-    }
-
-    .download-inner h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(39px, 6vw, 65px);
-      line-height: 1.1;
-      letter-spacing: -3px;
-      margin: 20px 0;
-    }
-
-    .download-inner p {
-      color: var(--muted);
-      max-width: 520px;
-      margin: 0 auto;
-      line-height: 1.9;
-      font-size: 15px;
-    }
-
-    .download-inner .btn {
-      margin-top: 32px;
-    }
-
-    /* FOOTER */
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 34px 0;
-      background: #090C11;
-    }
-
-    .footer-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .footer-logo {
-      width: 112px;
-      height: auto;
-    }
-
-    .footer-copy {
-      color: #727D89;
-      font-size: 11px;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 22px;
-    }
-
-    .footer-links a {
-      color: var(--muted);
-      font-size: 12px;
-      transition: .2s;
-    }
-
-    .footer-links a:hover {
-      color: var(--lime);
-    }
-
-    /* REVEAL ANIMATION */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 850px) {
-      .nav-links {
-        gap: 18px;
-      }
-
-      .philosophy-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-      }
-
-      .features-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .experience-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 650px) {
-      .container {
-        width: min(100% - 34px, var(--max));
-      }
-
-      .nav {
-        height: 70px;
-      }
-
-      .brand img {
-        width: 122px;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        right: 0;
-        padding: 22px;
-        background: #10151E;
-        border-bottom: 1px solid var(--border);
-        flex-direction: column;
-        align-items: stretch;
-        gap: 19px;
-      }
-
-      .nav-links.open {
-        display: flex;
-      }
-
-      .nav-links a {
-        padding: 5px 0;
-      }
-
-      .nav-cta {
-        text-align: center;
-      }
-
-      .hero {
-        min-height: 610px;
-        padding: 90px 0;
-      }
-
-      .hero h1 {
-        letter-spacing: -3px;
-      }
-
-      .hero-description {
-        font-size: 15px;
-      }
-
-      section {
-        padding: 78px 0;
-      }
-
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .feature-card {
-        min-height: 210px;
-      }
-
-      .experience-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .footer-content {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .footer-links {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-        animation-duration: .01ms !important;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B0E14">
+    <meta name="description" content="CURLOFT — Precision Workout Tracking. Track workouts, plan training, monitor progress and take control of your fitness journey.">
+
+    <title>CURLOFT — Precision Workout Tracking</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0B0E14;
+            --surface: #111720;
+            --surface-light: #171F2A;
+            --lime: #00FF66;
+            --text: #F4F7F5;
+            --muted: #89939F;
+            --border: rgba(255,255,255,0.08);
+            --font: 'DM Sans', sans-serif;
+            --display: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: var(--display);
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .logo span {
+            color: var(--lime);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 34px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: var(--lime);
+            transition: .2s;
+        }
+
+        .nav-download {
+            padding: 10px 18px;
+            border: 1px solid var(--lime);
+            color: var(--lime);
+            border-radius: 6px;
+        }
+
+        .nav-download:hover {
+            background: var(--lime);
+            color: #07110A !important;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 670px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 100px 0;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            background: var(--lime);
+            opacity: .055;
+            filter: blur(150px);
+            border-radius: 50%;
+            right: 0;
+            top: 10%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 760px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--lime);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 25px;
+            height: 1px;
+            background: var(--lime);
+        }
+
+        .hero h1 {
+            font-family: var(--display);
+            font-size: clamp(65px, 12vw, 130px);
+            line-height: .95;
+            letter-spacing: -8px;
+            font-weight: 700;
+        }
+
+        .hero h1 span {
+            color: var(--lime);
+        }
+
+        .hero h2 {
+            font-family: var(--display);
+            font-size: clamp(20px, 3vw, 29px);
+            font-weight: 500;
+            margin-top: 25px;
+            letter-spacing: -.8px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 15px;
+            max-width: 510px;
+            margin-top: 18px;
+            line-height: 1.9;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 24px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: .25s ease;
+        }
+
+        .btn-primary {
+            background: var(--lime);
+            color: #07110A;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,255,102,.2);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--lime);
+            color: var(--lime);
+        }
+
+        .hero-bottom {
+            margin-top: 90px;
+            display: flex;
+            gap: 45px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            border-left: 2px solid var(--lime);
+            padding-left: 13px;
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-family: var(--display);
+            font-size: 17px;
+        }
+
+        .hero-stat span {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* SECTION COMMON */
+
+        section {
+            padding: 105px 0;
+        }
+
+        .section-label {
+            color: var(--lime);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: var(--display);
+            font-size: clamp(32px, 5vw, 52px);
+            line-height: 1.15;
+            letter-spacing: -2px;
+        }
+
+        .section-description {
+            color: var(--muted);
+            max-width: 520px;
+            font-size: 14px;
+            margin-top: 16px;
+            line-height: 1.9;
+        }
+
+        /* FEATURES */
+
+        .features {
+            background: #0E131B;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 55px;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 28px;
+            min-height: 220px;
+            transition: .3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(0,255,102,.5);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            background: rgba(0,255,102,.09);
+            color: var(--lime);
+            font-size: 20px;
+            margin-bottom: 25px;
+        }
+
+        .feature-card h3 {
+            font-family: var(--display);
+            font-size: 19px;
+            margin-bottom: 9px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .feature-number {
+            position: absolute;
+            top: 20px;
+            right: 23px;
+            font-family: var(--display);
+            font-size: 12px;
+            color: #46505B;
+        }
+
+        /* PHILOSOPHY */
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .precision-visual {
+            min-height: 350px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .precision-visual::before,
+        .precision-visual::after {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border: 1px solid rgba(0,255,102,.15);
+            border-radius: 50%;
+        }
+
+        .precision-visual::after {
+            width: 180px;
+            height: 180px;
+        }
+
+        .precision-symbol {
+            color: var(--lime);
+            font-family: var(--display);
+            font-size: 100px;
+            font-weight: 700;
+            z-index: 1;
+            text-shadow: 0 0 45px rgba(0,255,102,.2);
+        }
+
+        .visual-tag {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--muted);
+        }
+
+        .principles {
+            margin-top: 30px;
+        }
+
+        .principle {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .principle span {
+            color: var(--lime);
+        }
+
+        .principle p {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* DOWNLOAD */
+
+        .download {
+            background: #0E131B;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .download-box {
+            padding: 75px 25px;
+            border: 1px solid rgba(0,255,102,.2);
+            border-radius: 12px;
+            background:
+                radial-gradient(ellipse at 50% 100%, rgba(0,255,102,.08), transparent 65%),
+                var(--surface);
+        }
+
+        .download-box h2 {
+            font-family: var(--display);
+            font-size: clamp(35px, 6vw, 58px);
+            letter-spacing: -2px;
+        }
+
+        .download-box h2 span {
+            color: var(--lime);
+        }
+
+        .download-box p {
+            color: var(--muted);
+            font-size: 14px;
+            max-width: 470px;
+            margin: 18px auto 30px;
+            line-height: 1.8;
+        }
+
+        .download-meta {
+            color: #68737E;
+            font-size: 11px;
+            margin-top: 18px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 30px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-copy {
+            color: #65707B;
+            font-size: 11px;
+        }
+
+        .footer-tagline {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+
+        .footer-tagline span {
+            color: var(--lime);
+        }
+
+        /* ANIMATIONS */
+
+        .reveal {
+            animation: appear .8s ease both;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .precision-visual {
+                min-height: 280px;
+            }
+
+            .hero {
+                min-height: 590px;
+            }
+
+            .hero h1 {
+                letter-spacing: -5px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            nav {
+                height: 70px;
+            }
+
+            .nav-links {
+                gap: 13px;
+                font-size: 11px;
+            }
+
+            .nav-links a:not(.nav-download) {
+                display: none;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .hero {
+                min-height: 580px;
+                padding: 75px 0;
+            }
+
+            .hero h1 {
+                font-size: clamp(58px, 17vw, 90px);
+                letter-spacing: -4px;
+            }
+
+            .hero-bottom {
+                gap: 25px;
+                margin-top: 65px;
+            }
+
+            section {
+                padding: 75px 0;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .feature-card {
+                min-height: 185px;
+            }
+
+            .download-box {
+                padding: 55px 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- NAVIGATION -->
+    <!-- NAVIGATION -->
 
-  <header>
-    <div class="container nav">
+    <div class="container">
+        <nav>
+            <a href="#" class="logo">CURLOFT<span>.</span></a>
 
-      <a class="brand" href="#home" aria-label="CURLOFT home">
-        <img src="curloft-wordmark.png" alt="CURLOFT">
-      </a>
-
-      <button class="menu-toggle" id="menuToggle"
-        aria-label="Open navigation" aria-expanded="false">
-        ☰
-      </button>
-
-      <nav class="nav-links" id="navLinks">
-        <a href="#home">Home</a>
-        <a href="#philosophy">About</a>
-        <a href="#features">Features</a>
-        <a href="#experience">Experience</a>
-        <a class="nav-cta" href="#download">Download App ↗</a>
-      </nav>
-
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#philosophy">Our Approach</a>
+                <a href="#download" class="nav-download">Download APK ↗</a>
+            </div>
+        </nav>
     </div>
-  </header>
-
-
-  <main>
 
     <!-- HERO -->
 
-    <section class="hero" id="home">
-      <div class="container">
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content reveal">
 
-        <div class="hero-content reveal">
+                    <div class="eyebrow">Built for consistency</div>
 
-          <div class="eyebrow">
-            A smarter way to train
-          </div>
+                    <h1>CURLOFT<span>.</span></h1>
 
-          <h1>
-            YOUR FITNESS.<br>
-            YOUR <span>PROGRESS.</span>
-          </h1>
+                    <h2>Precision Workout Tracking</h2>
 
-          <p class="hero-description">
-            Training is more than showing up. It's about consistency,
-            intention and progress. CURLOFT brings your workout journey
-            together in one focused experience.
-          </p>
+                    <p>
+                        Train with intention. Track every rep. Understand your progress.
+                        CURLOFT brings your entire fitness journey into one focused,
+                        beautifully designed experience.
+                    </p>
 
-          <div class="hero-actions">
+                    <div class="hero-actions">
+                        <a href="#download" class="btn btn-primary">
+                            Download for Android ↗
+                        </a>
 
-            <a class="btn btn-primary"
-              href="https://github.com/dstrn54/Curloft/releases/download/apk-release/CURLOFT-v1.0.0.apk">
-              ↓ &nbsp; Download APK
-            </a>
+                        <a href="#features" class="btn btn-outline">
+                            Explore Features ↓
+                        </a>
+                    </div>
 
-            <a class="btn btn-secondary" href="#features">
-              Explore CURLOFT &nbsp; →
-            </a>
+                    <div class="hero-bottom">
+                        <div class="hero-stat">
+                            <strong>TRACK</strong>
+                            <span>Every repetition</span>
+                        </div>
 
-          </div>
+                        <div class="hero-stat">
+                            <strong>PLAN</strong>
+                            <span>Every workout</span>
+                        </div>
 
-          <p class="hero-note">
-            <span>●</span> Android application
-            &nbsp; · &nbsp; Your training, your pace
-          </p>
+                        <div class="hero-stat">
+                            <strong>PROGRESS</strong>
+                            <span>Every milestone</span>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+
+        <section class="features" id="features">
+            <div class="container">
+
+                <div class="section-label">The ecosystem</div>
+
+                <h2 class="section-title">
+                    Everything you need.<br>
+                    Nothing you don't.
+                </h2>
+
+                <p class="section-description">
+                    Five focused spaces. One connected fitness experience.
+                    Designed to make training organized, measurable and consistent.
+                </p>
+
+                <div class="feature-grid">
+
+                    <article class="feature-card">
+                        <span class="feature-number">01</span>
+                        <div class="feature-icon">⌂</div>
+                        <h3>Home</h3>
+                        <p>
+                            Your fitness command centre. Get an overview of your
+                            training activity, daily goals and workout journey.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">02</span>
+                        <div class="feature-icon">↗</div>
+                        <h3>Workout</h3>
+                        <p>
+                            Log exercises, sets, reps and weights. Keep every
+                            training session structured and measurable.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">03</span>
+                        <div class="feature-icon">▦</div>
+                        <h3>Planner</h3>
+                        <p>
+                            Organize your training schedule, build routines
+                            and prepare your next workout.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">04</span>
+                        <div class="feature-icon">⌁</div>
+                        <h3>Progress</h3>
+                        <p>
+                            Review workout history, monitor performance
+                            and understand how far you've come.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">05</span>
+                        <div class="feature-icon">◎</div>
+                        <h3>Profile</h3>
+                        <p>
+                            Your personal fitness space. Manage preferences,
+                            exercises, settings and app information.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-number">06</span>
+                        <div class="feature-icon">✳</div>
+                        <h3>One ecosystem</h3>
+                        <p>
+                            A unified experience that brings your training,
+                            planning and progress together.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- PHILOSOPHY -->
+
+        <section id="philosophy">
+            <div class="container">
+                <div class="philosophy-grid">
+
+                    <div class="precision-visual">
+                        <div class="precision-symbol">C.</div>
+                        <div class="visual-tag">CURLOFT / PRECISION SYSTEM</div>
+                    </div>
+
+                    <div>
+                        <div class="section-label">The philosophy</div>
+
+                        <h2 class="section-title">
+                            Precision over<br>
+                            distraction.
+                        </h2>
+
+                        <p class="section-description">
+                            Fitness is not about collecting features.
+                            It's about building consistency, understanding
+                            your performance and making every session count.
+                        </p>
+
+                        <div class="principles">
+                            <div class="principle">
+                                <span>✳</span>
+                                <p>Minimal, distraction-free experience.</p>
+                            </div>
+
+                            <div class="principle">
+                                <span>✳</span>
+                                <p>Purposeful design with a precision-first mindset.</p>
+                            </div>
+
+                            <div class="principle">
+                                <span>✳</span>
+                                <p>Meaningful tracking for measurable progress.</p>
+                            </div>
+
+                            <div class="principle">
+                                <span>✳</span>
+                                <p>Built around your training journey.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- DOWNLOAD -->
+
+        <section class="download" id="download">
+            <div class="container">
+                <div class="download-box">
+
+                    <div class="section-label">Take control</div>
+
+                    <h2>
+                        Your training.<br>
+                        <span>Your precision.</span>
+                    </h2>
+
+                    <p>
+                        Ready to bring structure to your workouts?
+                        Get CURLOFT on Android and start tracking your
+                        fitness journey.
+                    </p>
+
+                    <!-- Replace curloft.apk with your actual APK URL -->
+
+                    <a href="curloft.apk"
+                       class="btn btn-primary"
+                       download="CURLOFT.apk">
+                        ↓ Download Android APK
+                    </a>
+
+                    <div class="download-meta">
+                        ANDROID APPLICATION &nbsp; / &nbsp; APK DOWNLOAD
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+
+                <a href="#" class="logo">CURLOFT<span>.</span></a>
+
+                <div class="footer-copy">
+                    © <span id="year"></span> CURLOFT. All rights reserved.
+                </div>
+
+                <div class="footer-tagline">
+                    TRAIN WITH <span>PRECISION.</span>
+                </div>
+
+            </div>
         </div>
-      </div>
-    </section>
-
-
-    <!-- PHILOSOPHY -->
-
-    <section class="philosophy" id="philosophy">
-      <div class="container">
-
-        <div class="philosophy-grid">
-
-          <div class="reveal">
-
-            <div class="eyebrow">The CURLOFT philosophy</div>
-
-            <h2>
-              Progress isn't an accident.
-              <span class="lime">It's built.</span>
-            </h2>
-
-          </div>
-
-          <div class="philosophy-copy reveal">
-
-            <p>
-              Every workout is an opportunity to move forward.
-              Every rep is a small commitment to something bigger.
-            </p>
-
-            <p>
-              CURLOFT is designed to bring structure and clarity
-              to your fitness journey — helping you organise your
-              training, stay consistent and keep track of the work
-              you put in.
-            </p>
-
-            <p>
-              No unnecessary noise. Just a more focused way to train.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- FEATURES -->
-
-    <section id="features">
-      <div class="container">
-
-        <div class="section-heading reveal">
-
-          <div class="eyebrow">Built around your training</div>
-
-          <h2>
-            Everything you need.<br>
-            <span class="lime">Nothing you don't.</span>
-          </h2>
-
-          <p>
-            A focused fitness experience designed to make
-            organising and understanding your training simpler.
-          </p>
-
-        </div>
-
-        <div class="features-grid">
-
-          <article class="feature-card reveal">
-            <div class="feature-number">01 / TRAIN</div>
-            <div class="feature-icon">↗</div>
-            <h3>Workout Tracking</h3>
-            <p>
-              Keep your training organised and record your
-              workout sessions as you progress.
-            </p>
-          </article>
-
-          <article class="feature-card reveal">
-            <div class="feature-number">02 / PLAN</div>
-            <div class="feature-icon">▦</div>
-            <h3>Workout Planner</h3>
-            <p>
-              Bring structure to your training with a dedicated
-              space for organising your workout routine.
-            </p>
-          </article>
-
-          <article class="feature-card reveal">
-            <div class="feature-number">03 / PROGRESS</div>
-            <div class="feature-icon">⌁</div>
-            <h3>Progress Tracking</h3>
-            <p>
-              Keep an eye on your training journey and
-              recognise the consistency behind your results.
-            </p>
-          </article>
-
-          <article class="feature-card reveal">
-            <div class="feature-number">04 / PERSONALISE</div>
-            <div class="feature-icon">◎</div>
-            <h3>Your Fitness Space</h3>
-            <p>
-              Keep your personal fitness experience organised
-              around your training preferences.
-            </p>
-          </article>
-
-          <article class="feature-card reveal">
-            <div class="feature-number">05 / SIMPLICITY</div>
-            <div class="feature-icon">✳</div>
-            <h3>Focused Experience</h3>
-            <p>
-              A clean, purpose-driven interface that keeps
-              your attention on what matters.
-            </p>
-          </article>
-
-          <article class="feature-card reveal">
-            <div class="feature-number">06 / CONSISTENCY</div>
-            <div class="feature-icon">∞</div>
-            <h3>Built for the Long Run</h3>
-            <p>
-              Make fitness a sustainable part of your routine,
-              one session at a time.
-            </p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- APP EXPERIENCE -->
-
-    <section class="experience" id="experience">
-      <div class="container">
-
-        <div class="section-heading reveal">
-
-          <div class="eyebrow">One connected experience</div>
-
-          <h2>
-            Your entire fitness journey.
-            <span class="lime">In one place.</span>
-          </h2>
-
-          <p>
-            Five focused spaces. One connected experience.
-            Everything organised around your fitness journey.
-          </p>
-
-        </div>
-
-        <div class="experience-grid">
-
-          <article class="experience-card reveal">
-            <div class="symbol">⌂</div>
-            <h3>Home</h3>
-            <p>Your fitness overview</p>
-          </article>
-
-          <article class="experience-card reveal">
-            <div class="symbol">↗</div>
-            <h3>Workout</h3>
-            <p>Your training sessions</p>
-          </article>
-
-          <article class="experience-card reveal">
-            <div class="symbol">▦</div>
-            <h3>Planner</h3>
-            <p>Your training structure</p>
-          </article>
-
-          <article class="experience-card reveal">
-            <div class="symbol">⌁</div>
-            <h3>Progress</h3>
-            <p>Your training journey</p>
-          </article>
-
-          <article class="experience-card reveal">
-            <div class="symbol">◎</div>
-            <h3>Profile</h3>
-            <p>Your personal space</p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- DOWNLOAD -->
-
-    <section class="download-section" id="download">
-      <div class="container">
-
-        <div class="download-inner reveal">
-
-          <img
-            class="download-logo"
-            src="curloft-symbol.png"
-            alt="CURLOFT symbol"
-          >
-
-          <div class="eyebrow">Your next chapter starts here</div>
-
-          <h2>
-            Make every<br>
-            <span class="lime">rep count.</span>
-          </h2>
-
-          <p>
-            Bring more intention to your training.
-            Start building consistency with CURLOFT.
-            Your fitness journey deserves a better system.
-          </p>
-
-          <a class="btn btn-primary"
-            href="https://github.com/dstrn54/Curloft/releases/download/apk-release/CURLOFT-v1.0.0.apk">
-            ↓ &nbsp; Download CURLOFT for Android
-          </a>
-
-          <p style="font-size:11px; margin-top:18px;">
-            Android APK · Version 1.0.0
-          </p>
-
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-
-  <!-- FOOTER -->
-
-  <footer>
-    <div class="container">
-
-      <div class="footer-content">
-
-        <a href="#home">
-          <img
-            class="footer-logo"
-            src="curloft-wordmark.png"
-            alt="CURLOFT"
-          >
-        </a>
-
-        <p class="footer-copy">
-          © <span id="year"></span> CURLOFT. All rights reserved.
-        </p>
-
-        <div class="footer-links">
-          <a href="#home">Home</a>
-          <a href="#features">Features</a>
-          <a href="https://github.com/dstrn54/Curloft"
-             target="_blank" rel="noopener noreferrer">
-            GitHub ↗
-          </a>
-        </div>
-
-      </div>
-
-    </div>
-  </footer>
-
-
-  <!-- JAVASCRIPT -->
-
-  <script>
-    // Mobile navigation
-
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
-
-    menuToggle.addEventListener("click", () => {
-      const isOpen = navLinks.classList.toggle("open");
-
-      menuToggle.textContent = isOpen ? "×" : "☰";
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    // Close mobile menu after selecting a link
-
-    document.querySelectorAll("#navLinks a").forEach(link => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        menuToggle.textContent = "☰";
-        menuToggle.setAttribute("aria-expanded", "false");
-      });
-    });
-
-    // Footer year
-
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
-
-    // Scroll reveal animations
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.12
-    });
-
-    document.querySelectorAll(".reveal").forEach(element => {
-      observer.observe(element);
-    });
-  </script>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+    </script>
 
 </body>
 </html>
